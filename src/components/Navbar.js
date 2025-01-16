@@ -34,6 +34,7 @@ function Navbar() {
   };
 
   const handleGetStartedClick = () => {
+    console.log("Get Started");
     router.push("/register");
   };
 
