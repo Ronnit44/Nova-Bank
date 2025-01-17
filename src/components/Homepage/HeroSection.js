@@ -6,7 +6,6 @@ import { useRouter } from "next/navigation";
 function HeroSection() {
   const router = useRouter();
   const handleGetStarted = () => {
-    console.log("Get Started");
     router.push("/register");
   };
   const fadeInFromLeft = {

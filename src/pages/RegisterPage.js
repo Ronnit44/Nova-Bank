@@ -6,21 +6,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUsers } from "@fortawesome/free-solid-svg-icons";
 import { toast, Toaster } from "react-hot-toast";
 import { useAuth } from "../../context/authContext";
-// Ensure this import is correct
-
-const GetStartedButton = () => {
-  const router = useRouter(); // Initialize the router
-
-  const handleGetStarted = () => {
-    // Programmatic navigation
-    router.push("/register");
-    console.log("Get Started");
-     // Navigate to the registration page
-  };
-
-  return <button onClick={handleGetStarted}>Get Started</button>;
-};
-
 function RegisterPage() {
   const { setIsLoggedIn } = useAuth() || {}; 
   const [email, setEmail] = useState("");
@@ -126,7 +111,6 @@ function RegisterPage() {
                     Login
                   </Link>
                 </p>
-                <GetStartedButton /> {/* Add the GetStartedButton component */}
               </div>
             </div>
           </div>
