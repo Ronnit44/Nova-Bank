@@ -11,6 +11,7 @@ import { useRouter } from "next/navigation";
 function SolutionSection() {
   const router = useRouter();
   const handleGetStarted = () => {
+    console.log("Get Started");
     router.push("/register");
   };
   const cards = [

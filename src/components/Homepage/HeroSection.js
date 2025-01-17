@@ -1,8 +1,13 @@
 "use client"
 import React from "react";
 import { motion } from "framer-motion";
+import { useRouter } from "next/navigation";
 
 function HeroSection() {
+  const router = useRouter();
+  const handleGetStarted = () => {
+    router.push("/register");
+  };
   const fadeInFromLeft = {
     hidden: { opacity: 0, x: -100 },
     visible: { opacity: 1, x: 0, transition: { duration: 0.8 } },
@@ -25,7 +30,10 @@ function HeroSection() {
           financial insights all with a free Novo account. Apply in 10 Minutes
         </div>
         <div>
-          <button className="flex gap-2 max-sm:m-auto border-[1px] border-gray-300 rounded-full px-4 py-2 items-center text-lg">
+          <button 
+            className="flex gap-2 max-sm:m-auto border-[1px] border-gray-300 rounded-full px-4 py-2 items-center text-lg"
+            onClick={handleGetStarted}
+          >
             <img src="/Arrow.png" alt="Arrow" className="w-8" />
             <div>Get Started</div>
           </button>
