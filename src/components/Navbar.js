@@ -13,7 +13,7 @@ function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
 
   useEffect(() => {
-    const session = Cookies.get('session'); 
+    const session = Cookies.get('session');
     console.log(session,"SADSAd")
     if (session) setIsLoggedIn(true);
   }, []);
@@ -25,11 +25,14 @@ function Navbar() {
   const handleLoginClick = () => {
     router.push("/login");
   };
+  const ContactClick = () => {
+    router.push("/contact");
+  };
 
   const handleLogoutClick = async () => {
-    await fetch('/api/logout'); 
+    await fetch('/api/logout');
     Cookies.remove('session');
-    setIsLoggedIn(false); 
+    setIsLoggedIn(false);
     router.push("/");
   };
 
@@ -49,7 +52,7 @@ function Navbar() {
   return (
     <div className={`py-6 px-4 lg:px-16 ${isLogin || isRegister ? "hidden" : "block"}`}>
       <div className="flex justify-between items-center">
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-2 cursor-pointer" onClick={() => router.push("/")}>
           <img src="/logo.png" alt="logo" className="w-8" />
           <img src="/logo_heading.png" alt="logo_heading" className="w-16" />
         </div>
@@ -58,7 +61,7 @@ function Navbar() {
           <div className="hover:text-gray-400 cursor-pointer">Solution</div>
           <div className="hover:text-gray-400 cursor-pointer">Resources</div>
           <div className="hover:text-gray-400 cursor-pointer">Results</div>
-          <div className="hover:text-gray-400 cursor-pointer">Contact</div>
+          <div className="hover:text-gray-400 cursor-pointer" onClick={ContactClick}>Contact</div>
         </div>
         <div className="hidden lg:flex gap-8 items-center">
           {!isLoggedIn ? (
@@ -104,7 +107,7 @@ function Navbar() {
           <div>Solution</div>
           <div>Resources</div>
           <div>Results</div>
-          <div>Contact</div>
+          <div onClick={ContactClick}>Contact</div>
           <hr className="border-gray-300 my-4" />
           <div className="flex flex-col gap-4">
             {!isLoggedIn ? (
