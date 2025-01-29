@@ -1,5 +1,6 @@
 "use client"
 import React from "react";
+import '@fortawesome/fontawesome-free/css/all.min.css';
 import { usePathname } from "next/navigation";
 function Footer() {
   const pathname = usePathname();
@@ -24,7 +25,11 @@ function Footer() {
               Minutes
             </div>
             <div>
-              <div></div>
+              <div className="mt-10 flex space-x-4">
+                <a href="#"><i className="fa-brands fa-facebook fa-xl text-gray-700"></i></a>
+                <a href="#"><i class="fa-brands fa-square-instagram fa-xl text-gray-700"></i></a>
+                <a href="#"><i class="fa-brands fa-square-x-twitter fa-xl text-gray-700"></i></a>
+              </div>
               <div></div>
               <div></div>
             </div>
