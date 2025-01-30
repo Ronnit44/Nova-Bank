@@ -3,6 +3,9 @@ import React, { useState, useRef } from "react";
 import { motion, useInView } from "framer-motion";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronDown, faChevronUp } from "@fortawesome/free-solid-svg-icons";
+import { MdLock } from "react-icons/md";
+import { RiShieldCheckFill } from "react-icons/ri";
+import { FaCreditCard } from "react-icons/fa";
 
 const features = [
   {
@@ -111,9 +114,8 @@ function FeatureSection() {
                   onClick={() => toggleExpand(index)}
                 >
                   <motion.h3
-                    className={`text-xl ${
-                      expanded === index ? "text-[#FD5339]" : "text-black"
-                    }`}
+                    className={`text-xl ${expanded === index ? "text-[#FD5339]" : "text-black"
+                      }`}
                   >
                     {feature.title}
                   </motion.h3>
@@ -151,16 +153,22 @@ function FeatureSection() {
         className="bg-white rounded-xl p-8 md:p-14 w-full"
       >
         <div className="flex flex-col md:flex-row md:justify-around gap-8">
-          <div className="text-center md:text-left">
-            <div className="text-2xl">FDIC insured</div>
-            <div className="text-sm text-gray-500 mt-2 max-w-xs mx-auto md:mx-0">
-              Your deposits are insured for up to $250,000 through our partner
-              bank, Middlesex Federal Savings.
+          
+          <div className="text-center md:text-left flex items-center justify-center md:justify-start">
+          
+            <div>
+              <div className="flex gap-2 text-2xl"><RiShieldCheckFill className="text-[#FD5339] text-3xl" />FDIC insured</div>
+              <div className="text-sm text-gray-500 mt-2 max-w-xs">
+                Your deposits are insured for up to $250,000 through our partner bank, Middlesex Federal Savings.
+              </div>
             </div>
           </div>
 
+
+
+
           <div className="text-center md:text-left">
-            <div className="text-2xl">Powerful security</div>
+            <div className="flex gap-2 text-2xl"><MdLock className="text-[#FD5339] text-3xl"/>Powerful security</div>
             <div className="text-sm text-gray-500 mt-2 max-w-xs mx-auto md:mx-0">
               Our bank-grade encryption ensures that your information remains
               safe and secure at all times.
@@ -168,7 +176,7 @@ function FeatureSection() {
           </div>
 
           <div className="text-center md:text-left">
-            <div className="text-2xl">Instant card controls</div>
+            <div className="flex gap-2 text-2xl"><FaCreditCard className="text-[#FD5339] text-3xl"/>Instant card controls</div>
             <div className="text-sm text-gray-500 mt-2 max-w-xs mx-auto md:mx-0">
               Freeze or unfreeze your cards anytime with just a few taps through
               our mobile app.
