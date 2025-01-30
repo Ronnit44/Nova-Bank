@@ -1,21 +1,25 @@
 "use client";
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faUsers } from "@fortawesome/free-solid-svg-icons";
+import { faUsers, faEye, faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import { toast, Toaster } from "react-hot-toast";
 import { useAuth } from "../../context/authContext";
+
 function RegisterPage() {
   const { setIsLoggedIn } = useAuth() || {}; 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const router = useRouter();
+
   useEffect(() => {
     if (!setIsLoggedIn) {
       console.warn("Auth context is not available.");
     }
   }, [setIsLoggedIn]);
+
   const handleSignup = async () => {
     try {
       const response = await fetch("/api/register", {
@@ -46,7 +50,7 @@ function RegisterPage() {
 
   return (
     <div className="min-h-screen bg-gray-100 text-gray-900 flex justify-center">
-      <Toaster position="top-right" reverseOrder={false} />{" "}
+      <Toaster position="top-right" reverseOrder={false} />
       <div className="max-w-screen-xl m-0 sm:m-6 bg-white shadow sm:rounded-lg flex items-center justify-center flex-1">
         <div className="lg:w-1/2 xl:w-5/12 p-6 sm:p-8">
           <div>
@@ -68,13 +72,23 @@ function RegisterPage() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                 />
-                <input
-                  className="w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-5"
-                  type="password"
-                  placeholder="Password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                />
+
+                <div className="relative mt-5">
+                  <input
+                    className="w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white"
+                    type={showPassword ? "text" : "password"}
+                    placeholder="Password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                  />
+                  <button
+                    type="button"
+                    className="absolute inset-y-0 right-3 flex items-center text-gray-500"
+                    onClick={() => setShowPassword(!showPassword)}
+                  >
+                    <FontAwesomeIcon icon={showPassword ? faEyeSlash : faEye} />
+                  </button>
+                </div>
 
                 <button
                   className="mt-5 tracking-wide font-semibold bg-[#FD5339] text-white w-full py-4 rounded-lg hover:bg-[#d1513d] transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none"
@@ -86,17 +100,11 @@ function RegisterPage() {
 
                 <p className="mt-6 text-xs text-gray-600 text-center">
                   I agree to abide by Nova&lsquo;s{" "}
-                  <a
-                    href="#"
-                    className="border-b border-gray-500 border-dotted"
-                  >
+                  <a href="#" className="border-b border-gray-500 border-dotted">
                     Terms of Service
                   </a>{" "}
                   and its{" "}
-                  <a
-                    href="#"
-                    className="border-b border-gray-500 border-dotted"
-                  >
+                  <a href="#" className="border-b border-gray-500 border-dotted">
                     Privacy Policy
                   </a>
                   .
