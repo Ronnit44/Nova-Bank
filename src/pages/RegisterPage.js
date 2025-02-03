@@ -12,6 +12,10 @@ function RegisterPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
+  const [otpSent, setOtpSent] = useState(false);
+  const [otp, setOtp] = useState("");
+  const [isOtpLoading, setIsOtpLoading] = useState(false);
+  const [isSignupLoading, setIsSignupLoading] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
@@ -20,14 +24,43 @@ function RegisterPage() {
     }
   }, [setIsLoggedIn]);
 
-  const handleSignup = async () => {
+  const handleSendOTP = async () => {
     try {
+      setIsOtpLoading(true);
       const response = await fetch("/api/register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ email, password }),
+        body: JSON.stringify({ 
+          type: 'send-otp',
+          email 
+        }),
+      });
+
+      if (response.ok) {
+        setOtpSent(true);
+        toast.success("OTP sent to your email!");
+      } else {
+        toast.error("Failed to send OTP. Please try again.");
+      }
+    } catch (error) {
+      console.error(error);
+      toast.error("Error sending OTP");
+    } finally {
+      setIsOtpLoading(false);
+    }
+  };
+
+  const handleSignup = async () => {
+    try {
+      setIsSignupLoading(true);
+      const response = await fetch("/api/register", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password, otp }),
       });
 
       if (response.ok) {
@@ -45,6 +78,8 @@ function RegisterPage() {
     } catch (error) {
       console.error(error);
       toast.error("An error occurred during signup. Please try again.");
+    } finally {
+      setIsSignupLoading(false);
     }
   };
 
@@ -90,13 +125,40 @@ function RegisterPage() {
                   </button>
                 </div>
 
-                <button
-                  className="mt-5 tracking-wide font-semibold bg-[#FD5339] text-white w-full py-4 rounded-lg hover:bg-[#d1513d] transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none"
-                  onClick={handleSignup}
-                >
-                  <FontAwesomeIcon icon={faUsers} className="w-6 h-6 -ml-2" />
-                  <span className="ml-2">Sign Up</span>
-                </button>
+                {!otpSent ? (
+                  <button
+                    className="mt-5 tracking-wide font-semibold bg-[#FD5339] text-white w-full py-4 rounded-lg hover:bg-[#d1513d] flex items-center justify-center"
+                    onClick={handleSendOTP}
+                    disabled={isOtpLoading}
+                  >
+                    {isOtpLoading ? (
+                      <div className="w-6 h-6 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                    ) : (
+                      "Send OTP"
+                    )}
+                  </button>
+                ) : (
+                  <>
+                    <input
+                      className="w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-5"
+                      type="text"
+                      placeholder="Enter OTP"
+                      value={otp}
+                      onChange={(e) => setOtp(e.target.value)}
+                    />
+                    <button
+                      className="mt-5 tracking-wide font-semibold bg-[#FD5339] text-white w-full py-4 rounded-lg hover:bg-[#d1513d] flex items-center justify-center"
+                      onClick={handleSignup}
+                      disabled={isSignupLoading}
+                    >
+                      {isSignupLoading ? (
+                        <div className="w-6 h-6 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+                      ) : (
+                        "Verify & Sign Up"
+                      )}
+                    </button>
+                  </>
+                )}
 
                 <p className="mt-6 text-xs text-gray-600 text-center">
                   I agree to abide by Nova&lsquo;s{" "}

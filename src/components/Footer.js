@@ -27,8 +27,8 @@ function Footer() {
             <div>
               <div className="mt-10 flex space-x-4">
                 <a href="#"><i className="fa-brands fa-facebook fa-xl text-gray-700"></i></a>
-                <a href="#"><i class="fa-brands fa-square-instagram fa-xl text-gray-700"></i></a>
-                <a href="#"><i class="fa-brands fa-square-x-twitter fa-xl text-gray-700"></i></a>
+                <a href="#"><i className="fa-brands fa-square-instagram fa-xl text-gray-700"></i></a>
+                <a href="#"><i className="fa-brands fa-square-x-twitter fa-xl text-gray-700"></i></a>
               </div>
               <div></div>
               <div></div>
