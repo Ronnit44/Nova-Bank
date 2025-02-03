@@ -1,6 +1,6 @@
 ---
 name: Bug Report
-about: Create a report to help us improve
+about: Report a bug or unexpected behavior in the project
 title: ''
 labels: bug
 assignees: ''
@@ -8,26 +8,40 @@ assignees: ''
 ---
 
 **Description:**
-A clear and concise description of what the bug is.
+A clear and concise description of what the bug is. Include any error messages or unusual behavior observed.
 
 **Steps to Reproduce:**
-1. Step 1
-2. Step 2
-3. Step 3
-
+Please list the steps to reproduce the bug.
+1. Step 1 (e.g., "Open the app")
+2. Step 2 (e.g., "Click on the 'Submit' button")
+3. Step 3 (e.g., "Observe the error")
+   
 **Expected Behavior:**
-What you expected to happen.
+What you expected the application to do, based on normal functionality.
 
 **Actual Behavior:**
-What actually happened.
+What actually happened, including any unexpected behavior, crashes, or failures.
+
+**Screenshots or Logs:**
+If applicable, include any screenshots or logs that help illustrate the bug.
+- [Link to Logs or paste logs here]
 
 **Environment:**
-- OS: [e.g. Windows, MacOS, Linux]
-- Version: [e.g. 1.0.0]
-- Browser: [e.g. Chrome, Firefox, Edge]
+- **OS:** [e.g., Windows 10, Ubuntu 22.04]
+- **Browser:** [e.g., Chrome 88, Firefox 85]
+- **Version:** [e.g., 1.2.3]
+- **Device:** [e.g., iPhone 12, PC]
 
-**Screenshots (if applicable):**
-Add screenshots to help explain your problem.
+**Additional Information:**
+Provide any other context that could help in investigating the issue:
+- Was this issue happening on a specific version?
+- Did the issue start after an update?
+- Does the issue happen intermittently or always?
+- Does the issue occur on specific devices or browsers?
 
-**Additional Context:**
-Add any other context about the problem here.
+**Priority:**
+- [ ] Low
+- [ ] Medium
+- [ ] High
+
+(Use priority tags to help identify the urgency)
