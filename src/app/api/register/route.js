@@ -1,20 +1,70 @@
 import dbConnect from '../../../../utils/dbConnect';
 import User from '../../../../models/User';
+import OTP from '../../../../models/OTP';
 import bcrypt from 'bcrypt';
 import { NextResponse } from 'next/server';
 import { serialize } from 'cookie';
+import { sendOTPEmail } from '../../../../utils/emailService';
+
+function generateOTP() {
+  return Math.floor(100000 + Math.random() * 900000).toString();
+}
 
 export async function POST(request) {
   try {
     await dbConnect();
-    const { email, password } = await request.json();
+    const data = await request.json();
+
+    // Handle OTP generation
+    if (data.type === 'send-otp') {
+      const otp = generateOTP();
+      
+      // Delete any existing OTP for this email
+      await OTP.deleteOne({ email: data.email });
+      
+      // Store new OTP in MongoDB
+      await OTP.create({
+        email: data.email,
+        otp: otp
+      });
+
+      // Send OTP via email
+      const emailSent = await sendOTPEmail(data.email, otp);
+      if (!emailSent) {
+        return NextResponse.json({ message: 'Failed to send OTP email' }, { status: 500 });
+      }
+
+      return NextResponse.json({ message: 'OTP sent successfully' });
+    }
+
+    // Handle registration with OTP verification
+    const { email, password, otp } = data;
+    
+    // Verify OTP from MongoDB
+    const storedOTPData = await OTP.findOne({ email });
+    
+    if (!storedOTPData || storedOTPData.otp !== otp) {
+      return NextResponse.json({ message: 'Invalid or expired OTP' }, { status: 400 });
+    }
+
+    // Delete the used OTP
+    await OTP.deleteOne({ email });
+
+    // Check for existing user
     const existingUser = await User.findOne({ email });
     if (existingUser) {
       return NextResponse.json({ message: 'Email already registered' }, { status: 409 });
     }
+
+    // Create new user
     const hashedPassword = await bcrypt.hash(password, 10);
     const newUser = await User.create({ email, password: hashedPassword });
-    const cookie = serialize('session', JSON.stringify({ email: newUser.email, role: newUser.role }), {
+
+    // Set session cookie
+    const cookie = serialize('session', JSON.stringify({ 
+      email: newUser.email, 
+      role: newUser.role 
+    }), {
       httpOnly: false,
       secure: process.env.NODE_ENV === 'production',
       sameSite: 'strict',
@@ -22,11 +72,18 @@ export async function POST(request) {
       maxAge: 60 * 60 * 24,
     });
 
-    const response = NextResponse.json({ message: 'Registration successful', user: { email: newUser.email, role: newUser.role } });
+    const response = NextResponse.json({ 
+      message: 'Registration successful', 
+      user: { email: newUser.email, role: newUser.role } 
+    });
     response.headers.append('Set-Cookie', cookie);
 
     return response;
   } catch (error) {
-    return NextResponse.json({ message: 'Error during registration', error: error.message }, { status: 500 });
+    console.error('Registration error:', error);
+    return NextResponse.json(
+      { message: 'Error during registration', error: error.message }, 
+      { status: 500 }
+    );
   }
 }
