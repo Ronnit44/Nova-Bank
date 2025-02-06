@@ -36,7 +36,7 @@ function Footer() {
           </div>
           <div className="grid max-sm:grid-cols-1 mt-6 max-md:grid-cols-2 gap-8 grid-cols-4">
             <div>
-              <h2 className="mb-4 text-xl font-semibold text-gray-900 dark:text-white">
+              <h2 className="mb-4 text-xl font-semibold text-[#FD5339] !important">
                 Our Product
               </h2>
               <ul className="text-gray-400 text-sm dark:text-gray-400">
@@ -73,7 +73,7 @@ function Footer() {
               </ul>
             </div>
             <div>
-              <h2 className="mb-4 text-xl font-semibold text-gray-900 dark:text-white">
+              <h2 className="mb-4 text-xl font-semibold text-[#FD5339] !important">
                 Company
               </h2>
               <ul className="text-gray-400 text-sm dark:text-gray-400">
@@ -115,7 +115,7 @@ function Footer() {
               </ul>
             </div>
             <div>
-              <h2 className="mb-4 text-xl font-semibold text-gray-900 dark:text-white">
+              <h2 className="mb-4 text-xl font-semibold text-[#FD5339] !important">
                 Resource
               </h2>
               <ul className="text-gray-400 text-sm dark:text-gray-400">
@@ -137,7 +137,7 @@ function Footer() {
               </ul>
             </div>
             <div>
-              <h2 className="mb-4 text-xl font-semibold text-gray-900 dark:text-white">
+              <h2 className="mb-4 text-xl font-semibold text-[#FD5339] !important">
                 Our Apps
               </h2>
               <ul className="text-gray-400 text-sm dark:text-gray-400">
