@@ -19,7 +19,7 @@ function HeroSection() {
   };
 
   return (
-    <div className="pb-28 px-20 max-sm:px-4 flex flex-col lg:flex-row gap-10 mt-10">
+    <div className="pb-28 px-20 max-sm:px-4 flex flex-col lg:flex-row gap-10 mt-10 pt-[80px]">
       <div className="w-full lg:w-[30%] relative px-4">
         <div className="text-[40px] lg:text-[55px] text-center sm:text-left leading-none top-0 absolute max-sm:relative w-full lg:w-[600px] rounded-4xl z-20">
           ALL YOUR BUSINESS BANKING IN ONE PLATFORM
