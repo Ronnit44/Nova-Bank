@@ -44,7 +44,7 @@ function SolutionSection() {
   const [activeIndex, setActiveIndex] = useState(0);
 
   return (
-    <div className="my-8 px-4 sm:px-8 py-16 bg-white">
+    <div id="solution-section" className="my-8 px-4 sm:px-8 py-16 bg-white">
       <div className="mb-8 flex flex-col sm:flex-row max-w-screen justify-between items-center">
         <div className="text-2xl sm:text-3xl text-center sm:text-left">
           <div>OUR SOLUTION MAKES IT EASIER</div>

@@ -5,7 +5,7 @@ import { useInView } from "react-intersection-observer";
 
 function StatsSection() {
   return (
-    <div className="flex flex-col lg:flex-row px-10 lg:px-20 justify-center items-center my-20 gap-10">
+    <div id="result-section" className="flex flex-col lg:flex-row px-10 lg:px-20 justify-center items-center my-20 gap-10">
       <img
         src="/StatsSection_Image1.png"
         alt="Image"

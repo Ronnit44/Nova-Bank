@@ -28,7 +28,24 @@ function Navbar() {
   const ContactClick = () => {
     router.push("/contact");
   };
-
+  const handleSolutionClick = () => {
+    const section = document.getElementById("solution-section");
+    if (section) {
+      section.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+  const handleResourceClick = () => {
+    const section = document.getElementById("resources-section");
+    if (section) {
+      section.scrollIntoView({ behavior: "smooth" });
+    }
+  };
+  const handleResultClick = () => {
+    const section = document.getElementById("result-section");
+    if (section) {
+      section.scrollIntoView({ behavior: "smooth" });
+    }
+  };
   const handleLogoutClick = async () => {
     await fetch('/api/logout');
     Cookies.remove('session');
@@ -50,17 +67,16 @@ function Navbar() {
   };
 
   return (
-    <div className={`py-6 px-4 lg:px-16 ${isLogin || isRegister ? "hidden" : "block"}`}>
+    <div className={`fixed top-0 left-0 w-full bg-white z-50 py-6 px-4 lg:px-16 ${isLogin || isRegister ? "hidden" : "block"}`}>
       <div className="flex justify-between items-center">
         <div className="flex items-center gap-2 cursor-pointer" onClick={() => router.push("/")}>
           <img src="/logo.png" alt="logo" className="w-8" />
           <img src="/logo_heading.png" alt="logo_heading" className="w-16" />
         </div>
         <div className="hidden lg:flex gap-12 text-lg font-medium text-gray-500">
-          <div className="hover:text-gray-400 cursor-pointer">Business Checking</div>
-          <div className="hover:text-gray-400 cursor-pointer">Solution</div>
-          <div className="hover:text-gray-400 cursor-pointer">Resources</div>
-          <div className="hover:text-gray-400 cursor-pointer">Results</div>
+          <div className="hover:text-gray-400 cursor-pointer" onClick={handleSolutionClick}>Solution</div>
+          <div className="hover:text-gray-400 cursor-pointer" onClick={handleResourceClick}>Resources</div>
+          <div className="hover:text-gray-400 cursor-pointer" onClick={handleResultClick}>Results</div>
           <div className="hover:text-gray-400 cursor-pointer" onClick={ContactClick}>Contact</div>
         </div>
         <div className="hidden lg:flex gap-8 items-center">

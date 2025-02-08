@@ -42,7 +42,7 @@ function FeatureSection() {
   };
 
   return (
-    <div>
+    <div id ="resources-section">
       <motion.div
         className="pb-20 overflow-hidden px-20 max-sm:px-4 flex flex-col lg:flex-row gap-10 max-sm:mt-20 lg:px-2"
         initial={{ opacity: 0, x: -50 }}
