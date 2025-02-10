@@ -197,7 +197,7 @@ function FeatureSection() {
           />
         </div>
       </motion.div>
-    </div>
+    </div> 
   );
 }
 

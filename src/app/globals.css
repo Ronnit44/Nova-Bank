@@ -2,3 +2,18 @@
 @tailwind components;
 @tailwind utilities;
 
+.react-chatbot-kit-chat-container {
+    width: 350px;
+    border-radius: 15px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+  }
+  
+  .react-chatbot-kit-chat-message-container {
+    background: #f6f6f6;
+  }
+  
+  .react-chatbot-kit-user-chat-message {
+    background: #FD5339;
+    color: white;
+    margin-left: auto;
+  }

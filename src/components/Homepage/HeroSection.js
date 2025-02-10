@@ -1,13 +1,21 @@
 "use client"
-import React from "react";
+import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { useRouter } from "next/navigation";
+import CustomChatbot from "./Chatbot";
 
 function HeroSection() {
   const router = useRouter();
+  const [isChatbotVisible, setIsChatbotVisible] = useState(false);
+
   const handleGetStarted = () => {
     router.push("/register");
   };
+
+  const handleLiveChat = () => {
+    setIsChatbotVisible(!isChatbotVisible);
+  };
+
   const fadeInFromLeft = {
     hidden: { opacity: 0, x: -100 },
     visible: { opacity: 1, x: 0, transition: { duration: 0.8 } },
@@ -36,6 +44,13 @@ function HeroSection() {
           >
             <img src="/Arrow.png" alt="Arrow" className="w-8" />
             <div>Get Started</div>
+          </button>
+          <button 
+            className="flex gap-3 rgb(229, 231, 235) text-black rounded-full px-8 py-2 items-center mt-4 border-[1px] border-gray-300"
+            onClick={handleLiveChat}
+          >
+            <img src="/Arrow.png" alt="Chat" className="w-7" />
+            <div>Live Chat</div>
           </button>
         </div>
         <div className="py-8 max-sm:text-center">
@@ -95,6 +110,7 @@ function HeroSection() {
           </div>
         </div>
       </div>
+      {isChatbotVisible && <CustomChatbot />}
     </div>
   );
 }
