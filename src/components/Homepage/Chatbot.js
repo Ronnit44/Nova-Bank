@@ -10,7 +10,7 @@ import config from './config';
 
 const CustomChatbot = ({ toggleChatbot }) => {
   return (
-    <div className="fixed bottom-8 right-8 z-50 bg-white shadow-lg rounded-lg overflow-hidden">
+    <div className="fixed bottom-8 left-8 z-50 bg-white shadow-lg rounded-lg overflow-hidden">
       <div className="flex justify-end p-2">
         <button onClick={toggleChatbot} className="text-gray-500 hover:text-gray-700">
           <FontAwesomeIcon icon={faTimes} />

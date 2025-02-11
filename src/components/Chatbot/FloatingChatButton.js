@@ -14,7 +14,7 @@ const FloatingChatButton = () => {
   return (
     <div>
       <button
-        className="fixed bottom-8 right-5 bg-blue-500 text-white p-4 rounded-full shadow-lg z-50"
+        className="fixed bottom-8 left-5 bg-blue-500 text-white p-4 rounded-full shadow-lg z-50"
         onClick={toggleChatbot}
       >
         <FontAwesomeIcon icon={isChatbotVisible ? faTimes : faComments} />
