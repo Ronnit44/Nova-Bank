@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useAuth } from "../../context/authContext";
+import { toast, Toaster } from "react-hot-toast"; // Add this import
 
 function LoginPage() {
   const { setIsLoggedIn } = useAuth() || {};
@@ -10,6 +11,8 @@ function LoginPage() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [showPassword, setShowPassword] = useState(false); // New state for toggling password visibility
+  const [isForgotLoading, setIsForgotLoading] = useState(false);
+  const [showConfirmModal, setShowConfirmModal] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
@@ -30,19 +33,52 @@ function LoginPage() {
       });
 
       if (response.ok) {
+        toast.success("Login successful!");
         setIsLoggedIn(true);
         router.push("/");
       } else {
         const errorData = await response.json();
+        toast.error(errorData.message || "Invalid credentials");
         setError(errorData.message || "Login failed");
       }
     } catch (err) {
+      toast.error("An unexpected error occurred");
       setError("An unexpected error occurred.");
+    }
+  };
+
+  const handleForgotPassword = async () => {
+    if (!email) {
+      toast.error("Please enter your email address");
+      return;
+    }
+
+    try {
+      setIsForgotLoading(true);
+      const response = await fetch("/api/forgot-password", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email }),
+      });
+
+      if (response.ok) {
+        setShowConfirmModal(true);
+      } else {
+        const errorData = await response.json();
+        toast.error(errorData.message || "Failed to send reset link");
+      }
+    } catch (error) {
+      toast.error("An error occurred. Please try again.");
+    } finally {
+      setIsForgotLoading(false);
     }
   };
 
   return (
     <div className="min-h-screen bg-gray-100 text-gray-900 flex justify-center">
+      <Toaster position="top-right" reverseOrder={false} />
       <div className="max-w-screen-xl m-0 sm:m-10 bg-white shadow sm:rounded-lg flex justify-center flex-1">
         <div className="lg:w-1/2 xl:w-5/12 p-6 sm:p-12">
           <div>
@@ -120,6 +156,24 @@ function LoginPage() {
                     </button>
                   </div>
 
+                  <div className="flex justify-between items-center mt-2">
+                    <button
+                      type="button"
+                      onClick={handleForgotPassword}
+                      disabled={isForgotLoading}
+                      className="text-sm text-[#FD5339] hover:text-[#d15542] flex items-center"
+                    >
+                      {isForgotLoading ? (
+                        <>
+                          <div className="w-4 h-4 border-2 border-[#FD5339] border-t-transparent rounded-full animate-spin mr-2"></div>
+                          Sending...
+                        </>
+                      ) : (
+                        "Forgot Password?"
+                      )}
+                    </button>
+                  </div>
+
                   <button
                     type="submit"
                     className="mt-5 tracking-wide font-semibold bg-[#FD5339] text-white-500 w-full py-4 rounded-lg hover:bg-[#be4937] transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none"
@@ -185,6 +239,41 @@ function LoginPage() {
           ></div>
         </div>
       </div>
+
+      {showConfirmModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+          <div className="bg-white p-8 rounded-lg max-w-md w-full mx-4">
+            <div className="text-center">
+              <svg
+                className="mx-auto h-12 w-12 text-green-500"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M5 13l4 4L19 7"
+                />
+              </svg>
+              <h3 className="mt-4 text-lg font-medium text-gray-900">
+                Reset Link Sent!
+              </h3>
+              <p className="mt-2 text-sm text-gray-600">
+                Please check your email ({email}) for instructions to reset your
+                password. The link will expire in 1 hour.
+              </p>
+              <button
+                onClick={() => setShowConfirmModal(false)}
+                className="mt-6 w-full bg-[#FD5339] text-white py-2 px-4 rounded hover:bg-[#d15542]"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
