@@ -6,6 +6,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faBars, faTimes } from "@fortawesome/free-solid-svg-icons";
 import Cookies from 'js-cookie';
 import { useAuth } from "../../context/authContext";
+import Link from "next/link";
+
 function Navbar() {
   const { isLoggedIn, setIsLoggedIn } = useAuth();
   const pathname = usePathname();
@@ -14,9 +16,8 @@ function Navbar() {
 
   useEffect(() => {
     const session = Cookies.get('session');
-    console.log(session,"SADSAd")
     if (session) setIsLoggedIn(true);
-  }, []);
+  }, [setIsLoggedIn]);
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -25,27 +26,7 @@ function Navbar() {
   const handleLoginClick = () => {
     router.push("/login");
   };
-  const ContactClick = () => {
-    router.push("/contact");
-  };
-  const handleSolutionClick = () => {
-    const section = document.getElementById("solution-section");
-    if (section) {
-      section.scrollIntoView({ behavior: "smooth" });
-    }
-  };
-  const handleResourceClick = () => {
-    const section = document.getElementById("resources-section");
-    if (section) {
-      section.scrollIntoView({ behavior: "smooth" });
-    }
-  };
-  const handleResultClick = () => {
-    const section = document.getElementById("result-section");
-    if (section) {
-      section.scrollIntoView({ behavior: "smooth" });
-    }
-  };
+
   const handleLogoutClick = async () => {
     await fetch('/api/logout');
     Cookies.remove('session');
@@ -54,8 +35,14 @@ function Navbar() {
   };
 
   const handleGetStartedClick = () => {
-    console.log("Get Started");
     router.push("/register");
+  };
+
+  const handleScrollToSection = (sectionId) => {
+    const section = document.getElementById(sectionId);
+    if (section) {
+      section.scrollIntoView({ behavior: "smooth" });
+    }
   };
 
   const isRegister = pathname && pathname.startsWith("/register");
@@ -74,10 +61,16 @@ function Navbar() {
           <img src="/logo_heading.png" alt="logo_heading" className="w-16" />
         </div>
         <div className="hidden lg:flex gap-12 text-lg font-medium text-gray-500">
-          <div className="hover:text-gray-400 cursor-pointer" onClick={handleSolutionClick}>Solution</div>
-          <div className="hover:text-gray-400 cursor-pointer" onClick={handleResourceClick}>Resources</div>
-          <div className="hover:text-gray-400 cursor-pointer" onClick={handleResultClick}>Results</div>
-          <div className="hover:text-gray-400 cursor-pointer" onClick={ContactClick}>Contact</div>
+          {isLoggedIn && (
+            <>
+              <Link href="/dashboard" className="hover:text-gray-400 cursor-pointer">Dashboard</Link>
+              
+            </>
+          )}
+          <div className="hover:text-gray-400 cursor-pointer" onClick={() => handleScrollToSection("solution-section")}>Solution</div>
+          <div className="hover:text-gray-400 cursor-pointer" onClick={() => handleScrollToSection("resources-section")}>Resources</div>
+          <div className="hover:text-gray-400 cursor-pointer" onClick={() => handleScrollToSection("result-section")}>Results</div>
+          <div className="hover:text-gray-400 cursor-pointer" onClick={() => router.push("/contact")}>Contact</div>
         </div>
         <div className="hidden lg:flex gap-8 items-center">
           {!isLoggedIn ? (
@@ -119,11 +112,15 @@ function Navbar() {
         transition={{ duration: 0.3 }}
       >
         <div className="flex flex-col gap-8 text-lg font-medium text-gray-700">
-          <div>Business Checking</div>
-          <div>Solution</div>
-          <div>Resources</div>
-          <div>Results</div>
-          <div onClick={ContactClick}>Contact</div>
+          {isLoggedIn && (
+            <>
+              <Link href="/dashboard" className="text-lg font-medium cursor-pointer">Dashboard</Link>
+            </>
+          )}
+          <div className="hover:text-gray-400 cursor-pointer" onClick={() => handleScrollToSection("solution-section")}>Solution</div>
+          <div className="hover:text-gray-400 cursor-pointer" onClick={() => handleScrollToSection("resources-section")}>Resources</div>
+          <div className="hover:text-gray-400 cursor-pointer" onClick={() => handleScrollToSection("result-section")}>Results</div>
+          <div className="hover:text-gray-400 cursor-pointer" onClick={() => router.push("/contact")}>Contact</div>
           <hr className="border-gray-300 my-4" />
           <div className="flex flex-col gap-4">
             {!isLoggedIn ? (

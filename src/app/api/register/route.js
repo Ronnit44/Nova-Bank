@@ -23,17 +23,20 @@ export async function POST(request) {
       await OTP.deleteOne({ email: data.email });
       
       // Store new OTP in MongoDB
-      await OTP.create({
+      const newOtp = new OTP({
         email: data.email,
         otp: otp
       });
+      await newOtp.save();
 
       // Send OTP via email
       const emailSent = await sendOTPEmail(data.email, otp);
       if (!emailSent) {
+        console.error('Failed to send OTP email');
         return NextResponse.json({ message: 'Failed to send OTP email' }, { status: 500 });
       }
 
+      console.log('OTP sent successfully');
       return NextResponse.json({ message: 'OTP sent successfully' });
     }
 
@@ -44,6 +47,7 @@ export async function POST(request) {
     const storedOTPData = await OTP.findOne({ email });
     
     if (!storedOTPData || storedOTPData.otp !== otp) {
+      console.error('Invalid or expired OTP');
       return NextResponse.json({ message: 'Invalid or expired OTP' }, { status: 400 });
     }
 
@@ -53,6 +57,7 @@ export async function POST(request) {
     // Check for existing user
     const existingUser = await User.findOne({ email });
     if (existingUser) {
+      console.error('Email already registered');
       return NextResponse.json({ message: 'Email already registered' }, { status: 409 });
     }
 
@@ -78,6 +83,7 @@ export async function POST(request) {
     });
     response.headers.append('Set-Cookie', cookie);
 
+    console.log('Registration successful');
     return response;
   } catch (error) {
     console.error('Registration error:', error);
