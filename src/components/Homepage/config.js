@@ -28,5 +28,4 @@ const BalanceWidget = (props) => (
     <p className="text-gray-600 mt-2">Current Balance: $2,450.00</p>
   </div>
 );
-
 export default config;

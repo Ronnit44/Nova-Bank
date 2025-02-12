@@ -66,17 +66,18 @@ function RegisterPage() {
       if (response.ok) {
         toast.success("Registration successful! Redirecting...");
         setIsLoggedIn(true);
-        setTimeout(() => router.push("/"), 2000);
+        setTimeout(() => router.push("/dashboard"), 2000);
       } else {
         const errorData = await response.json();
-        if (errorData.message === "User already exists") {
-          toast.error("User already exists! Please log in.");
+        console.error('Error data:', errorData);
+        if (errorData.message === "Email already registered") {
+          toast.error("Email already registered! Please log in.");
         } else {
           toast.error("An error occurred. Please try again.");
         }
       }
     } catch (error) {
-      console.error(error);
+      console.error('Catch error:', error);
       toast.error("An error occurred during signup. Please try again.");
     } finally {
       setIsSignupLoading(false);
